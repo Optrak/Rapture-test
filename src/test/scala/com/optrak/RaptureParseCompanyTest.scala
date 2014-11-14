@@ -3,14 +3,12 @@ package com.optrak
 import grizzled.slf4j.Logging
 import org.joda.time.DateTime
 import org.specs2.mutable.Specification
-//import rapture.core._
-import rapture.data.BasicExtractor
+import rapture.data.{MissingValueException, BasicExtractor}
 import rapture.json._
 import jsonBackends.json4s._
 import com.optrak.scalautil.Dimensions
 import com.optrak.jsonutil.CompanyTestData._
 import IOTestData._
-//import scala.language.implicitConversions
 
 class RaptureParseCompanyTest extends Specification with Logging {
   val j2Companies = Json.parse(s2Companies)
@@ -22,7 +20,6 @@ class RaptureParseCompanyTest extends Specification with Logging {
     (implicit cbf: scala.collection.generic.CanBuildFrom[Nothing, T, Coll[T]], ext: Extractor[T, Data]): Extractor[Coll[T], Data] =
     BasicExtractor[Coll[T], Data]({ x => x.$ast.getArray(x.$root.value).to[List].map({v =>
       ext.construct(x.$wrap(v), x.$ast) }).to[Coll] })*/
-  //implicit def strToInt(s: String): Int = augmentString(s).toInt
 
   "parse people" in {
     val people1 = jWidgetCo.Person.as[Set[Person]]
@@ -55,12 +52,24 @@ class RaptureParseCompanyTest extends Specification with Logging {
     val people = jWidgetCo.Person.as[Set[Person]]
     val peopleMap = people.map(p => (p.name -> p)).toMap
 
-    implicit val teamExtractor = BasicExtractor[Team, Json]{js =>
+    val teamExtractor1 = BasicExtractor[Team, Json]{ js =>
+      val members = try {
+        js.members.as[Set[String]].map(m => peopleMap(m))
+      } catch {
+        case e: MissingValueException => Set[Person]()
+      }
+      Team(js.name.as[String], peopleMap(js.boss.as[String]), members)
+    }
+
+    val teamExtractor2 = BasicExtractor[Team, Json]{ js =>
       val members = js match {
         case json"""{"members": $members}""" => members.as[Set[String]].map(m => peopleMap(m))
         case _ => Set[Person]()
       }
-      Team(js.name.as[String], peopleMap(js.boss.as[String]), members)}
+      Team(js.name.as[String], peopleMap(js.boss.as[String]), members)
+    }
+
+    implicit val teamExtractor = teamExtractor1
 
     val teams = jWidgetCo.Team.as[Set[Team]]
     teams mustEqual Set(aTeam,bTeam)
