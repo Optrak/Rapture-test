@@ -8,7 +8,8 @@ resolvers ++= Seq(
   "snapshots" at "http://oss.sonatype.org/content/repositories/snapshots",
   "sonatype.releases" at "https://oss.sonatype.org/content/repositories/releases/",
   "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases/",
-  "SS" at "http://oss.sonatype.org/content/repositories/snapshots/")
+  "SS" at "http://oss.sonatype.org/content/repositories/snapshots/",
+  "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases")
 
 scalaVersion := "2.11.2"
 
