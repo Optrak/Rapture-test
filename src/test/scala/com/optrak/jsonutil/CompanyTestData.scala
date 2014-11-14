@@ -66,7 +66,7 @@ object CompanyTestData {
         "Person": [
           {
             "name": "joe",
-            "years": "3"
+            "years": 3
           },
           {
             "name": "jane",
@@ -75,14 +75,14 @@ object CompanyTestData {
           {
             "name": "fred",
             "years": "5",
-            "age": "55"
+            "age": 55
           }
         ],
         "Team": [
           {
             "name": "a-team",
             "boss": "fred",
-            "member": [
+            "members": [
               "jane",
               "joe"
             ]

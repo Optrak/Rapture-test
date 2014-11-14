@@ -24,6 +24,7 @@ libraryDependencies ++= {
     //"org.scalaz" %%  "scalaz-core" % "7.1.0",
     //"com.chuusai" %% "shapeless" % "2.0.0",
     //"org.typelevel" %% "shapeless-scalaz" % "0.1.3",
+   // "joda-time" % "joda-time" % "2.5",
     "com.propensive" %% "rapture-json-json4s" % "1.0.6",
     "com.typesafe.play" %% "play-json" % "2.3.4",
     "com.optrak" %% "scalautil" % "latest.integration",

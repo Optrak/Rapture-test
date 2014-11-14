@@ -13,12 +13,15 @@ class PlayJsonParseCompanyTest extends Specification with Logging {
   val jWidgetCo = (j2Companies \ "Company")(0)
   val jHoldingCo = (j2Companies \ "Company")(1)
   //implicit def strToInt(s: String): Int = augmentString(s).toInt
+  implicit val quotedIntReads = new Reads[Int] {
+    def reads(js: JsValue): JsResult[Int] = js.validate[String].map(_.toInt)
+  }
 
   "parse people" in {
     //don't see a way to cope with mixed quoted and unquoted ints
     implicit val personFormat = Json.format[Person]
     logger.info(jWidgetCo \ "Person")
-    val people1 = Json.fromJson[Person]((jWidgetCo \ "Person")(0)).asOpt.get
+    val people1 = Json.fromJson[Set[Person]](jWidgetCo \ "Person").asOpt.get
     logger.info(people1)
     people1 mustEqual Set(joe, jane, fred)
   }
