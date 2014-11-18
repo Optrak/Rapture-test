@@ -58,12 +58,10 @@ object CompanyTestData {
   def parseCompanies(jcompanies: JValue)(implicit context: ValidationContext): Validated[Set[Company]] =
     stackSafeSequence(jcompanies.children map(parseCompany(_)(context))) map (_.toSet)
 */
-  val s2Companies = """{
-    "Company": [
-      {
+  val sExperimentalCo = """{
         "name": "Widget Co",
         "ceo": "fred",
-        "Person": [
+        "people": [
           {
             "name": "joe",
             "years": 3
@@ -78,7 +76,7 @@ object CompanyTestData {
             "age": 55
           }
         ],
-        "Team": [
+        "teams": [
           {
             "name": "a-team",
             "boss": "fred",
@@ -89,7 +87,54 @@ object CompanyTestData {
           },
           {
             "name": "b-team",
+            "boss": "joe",
+            "members": []
+          },
+          {
+            "name": "c-team",
+            "boss": "joe",
+            "members": null
+          },
+          {
+            "name": "d-team",
             "boss": "joe"
+          }
+        ]
+      }"""
+
+  val s2Companies = """{
+    "Company": [
+      {
+        "name": "Widget Co",
+        "ceo": "fred",
+        "people": [
+          {
+            "name": "joe",
+            "years": 3
+          },
+          {
+            "name": "jane",
+            "years": "1"
+          },
+          {
+            "name": "fred",
+            "years": "5",
+            "age": 55
+          }
+        ],
+        "teams": [
+          {
+            "name": "a-team",
+            "boss": "fred",
+            "members": [
+              "jane",
+              "joe"
+            ]
+          },
+          {
+            "name": "b-team",
+            "boss": "joe",
+            "members": []
           }
         ]
       },
@@ -97,7 +142,7 @@ object CompanyTestData {
         "name": "Widget Holdings",
         "ceo": "fred",
         "complianceOfficer": "andrew",
-        "Person": [
+        "people": [
           {
             "name": "andrew",
             "years": "3"
@@ -107,7 +152,8 @@ object CompanyTestData {
             "years": "5",
             "age": "55"
           }
-        ]
+        ],
+        "teams": []
       }
     ]
   }"""
@@ -118,7 +164,7 @@ object CompanyTestData {
         "name": "Widget Holdings",
         "ceo": "fred",
         "complianceOfficer": "andrew",
-        "Person": [
+        "people": [
       {
         "name": "andrew",
         "years": "3"
@@ -138,7 +184,7 @@ object CompanyTestData {
         "name": "Widget Holdings",
         "ceo": "fred",
         "complianceOfficer": "andrew",
-        "Person": [
+        "people": [
       {
         "name": "andrew",
         "years": "3"

@@ -22,13 +22,23 @@ object IOTestData {
 
   val aTeam = Team("a-team", fred, Set(jane, joe))
   val bTeam = Team("b-team", joe, Set.empty)
+  val cTeam = bTeam.copy(name = "c-team")
+  val dTeam = bTeam.copy(name = "d-team")
 
   case class Company(name: String,
                      ceo: Person,
                      complianceOfficer: Option[Person],
                      people: Set[Person],
                      teams: Set[Team],
-                     dateProcessed: DateTime)
+                     dateProcessed: DateTime) {
+    def almost_== (another: Company): Boolean = {
+      this.name == another.name &&
+      this.ceo == another.ceo &&
+      this.complianceOfficer == another.complianceOfficer &&
+      this.people == another.people &&
+      this.teams == another.teams
+    }
+  }
 
   val thisTime = new DateTime
   val widgets = Company("Widget Co", fred, None, Set(joe, jane, fred), Set(aTeam, bTeam), thisTime)
