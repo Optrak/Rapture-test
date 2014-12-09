@@ -136,7 +136,8 @@ object CompanyTestData {
             "boss": "joe",
             "members": []
           }
-        ]
+        ],
+        "dateProcessed": "2014-11-20T12:41:38.969+02:00"
       },
       {
         "name": "Widget Holdings",
@@ -153,10 +154,14 @@ object CompanyTestData {
             "age": "55"
           }
         ],
-        "teams": []
+        "teams": [],
+        "dateProcessed": "2014-11-20T12:41:38.969+02:00"
       }
     ]
   }"""
+
+  /*,
+  "dateProcessed": "2014-11-20T12:41:38.969+02:00"*/
 
   val sBadRefCo =
     """{
@@ -165,16 +170,18 @@ object CompanyTestData {
         "ceo": "fred",
         "complianceOfficer": "andrew",
         "people": [
-      {
-        "name": "andrew",
-        "years": "3"
-      },
-      {
-        "name": "fredx",
-        "years": "5",
-        "age": "55"
-      }
-        ]
+          {
+            "name": "andrew",
+            "years": "3"
+          },
+          {
+            "name": "fredx",
+            "years": "5",
+            "age": "55"
+          }
+        ],
+        "teams": [],
+        "dateProcessed": "2014-11-20T12:41:38.969+02:00"
       }
     }"""
 
@@ -185,16 +192,18 @@ object CompanyTestData {
         "ceo": "fred",
         "complianceOfficer": "andrew",
         "people": [
-      {
-        "name": "andrew",
-        "years": "3"
-      },
-      {
-        "name": "fred",
-        "years": "5x",
-        "age": "55y"
-      }
-        ]
+          {
+            "name": "andrew",
+            "years": "3"
+          },
+          {
+            "name": "fred",
+            "years": "5x",
+            "age": "55y"
+          }
+        ],
+        "teams": [],
+        "dateProcessed": "2014-11-20T12:41:38.969+02:00"
       }
     }"""
 }

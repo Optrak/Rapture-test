@@ -1,13 +1,15 @@
 package com.optrak
 
-import com.optrak.scalautil.Dimensions.{XYZOpt, XYZ}
-import shapeless._
+import com.optrak.scalautil.Dimensions.{XYZ, XYZOpt}
 import com.optrak.scalautil.Fields._
 import org.joda.time.DateTime
+import shapeless._
 
 object IOTestData {
   case class Simple(name: String)//nothing to do with Company, just used in all writers
   val simpleFields = "name" :: HNil
+
+  case class Container (int: Int, simple: Simple)
 
   case class Person(name: String, age: Option[Int], years: Int)
   val personFields = "name" :: Some("age") :: "years" :: HNil
@@ -38,6 +40,15 @@ object IOTestData {
       this.people == another.people &&
       this.teams == another.teams
     }
+  }
+
+  case class AuxCompany(name: String,
+                        ceo: Person,
+                        complianceOfficer: Option[Person],
+                        people: Set[Person],
+                        teams: Set[Team],
+                        maybeDate: Option[DateTime]) {
+    def toCompany = Company(name, ceo, complianceOfficer, people, teams, maybeDate.getOrElse(new DateTime))
   }
 
   val thisTime = new DateTime
